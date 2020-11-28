@@ -1,0 +1,130 @@
+package signature
+
+import java.io.File
+import java.util.*
+
+fun main() {
+    val name = readLine()!!.toCharArray()
+    val dol = readLine()!!.toCharArray()
+
+    val font1 = Scanner(File("C:/fonts/roman.txt"))
+    val font2 = Scanner(File("C:/fonts/medium.txt"))
+
+    var dl_name = 0
+    var dl_dol = 0
+
+    val pech = Array(name.size, { 0 })
+    val pech1 = Array(dol.size, { 0 })
+
+    // Собираем шрифт красивый
+
+    val vis_bukv = font1.nextInt()
+    val kol_bukv = font1.nextInt()
+
+    val shrf1 = Array(kol_bukv + 1, { Array(vis_bukv + 2, { " " }) })
+
+    for (i in 0 until kol_bukv) {
+        shrf1[i][0] = font1.next()
+        shrf1[i][1] = font1.next()
+        var a = font1.nextLine()
+        for (j in 2 until vis_bukv + 2) shrf1[i][j] = font1.nextLine()
+    }
+    shrf1[kol_bukv][0] = " "
+    shrf1[kol_bukv][1] = 10.toString()
+    for (j in 2 until vis_bukv + 2) shrf1[kol_bukv][j] = "          "
+
+    // Массив и длина для печати
+    for (i in 0 until name.size) {
+        for (j in 0..kol_bukv) {
+            if (name[i].toString() == shrf1[j][0]) {
+                pech[i] = j
+                dl_name += shrf1[j][1].toInt()!!
+            }
+
+        }
+    }
+
+
+    // собираем шрифт уродский
+
+    val vis_bukv1 = font2.nextInt()
+    val kol_bukv1 = font2.nextInt()
+
+    val shrf2 = Array(kol_bukv1 + 1, { Array(vis_bukv1 + 2, { " " }) })
+
+    for (i in 0 until kol_bukv1) {
+        shrf2[i][0] = font2.next()
+        shrf2[i][1] = font2.next()
+        var a = font2.nextLine()
+        for (j in 2 until vis_bukv1 + 2) shrf2[i][j] = font2.nextLine()
+    }
+
+
+    shrf2[kol_bukv1][0] = " "
+    shrf2[kol_bukv1][1] = 5.toString()
+    for (j in 2 until vis_bukv1 + 2) shrf2[kol_bukv1][j] = "     "
+
+    // Массив и длина для печати
+    for (i in 0 until dol.size) {
+        for (j in 0..kol_bukv1) {
+            if (dol[i].toString() == shrf2[j][0]) {
+                pech1[i] = j
+                dl_dol += shrf2[j][1].toInt()!!
+            }
+
+        }
+    }
+    var max_dl = 0
+    if(dl_name>dl_dol)
+        max_dl=dl_name
+        else max_dl = dl_dol
+    var pom_1 = (max_dl-dl_name)%2
+    var pom_2 = (max_dl-dl_dol)%2
+
+
+    repeat(max_dl+8){
+        print("8")
+           }
+    println()
+    // печатаем норм шрифтом
+    for (j in 2 until vis_bukv + 2){
+         print("88  ")
+        repeat((max_dl-dl_name)/2){
+            print(" ")
+        }
+        for (i in pech) print(shrf1[i][j])
+        repeat((max_dl-dl_name)/2+pom_1){
+            print(" ")
+        }
+        print("  88")
+        println()
+    }
+
+
+
+    // печатаем уродским шрифтом
+    for (j in 2 until vis_bukv1 + 2) {
+        print("88  ")
+        repeat((max_dl-dl_dol)/2){
+            print(" ")
+        }
+        for (i in pech1) print(shrf2[i][j])
+        repeat((max_dl-dl_dol)/2+pom_2){
+            print(" ")
+        }
+        print("  88")
+        println()
+    }
+
+    repeat(max_dl+8){
+        print("8")
+    }
+
+}
+
+
+
+
+
+
+
